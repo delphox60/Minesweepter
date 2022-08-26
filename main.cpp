@@ -5,6 +5,7 @@
 using namespace std;
 
 vector<vector<int>> board;
+vector<vector<bool>> is_opened;
 int r_size;
 int c_size;
 
@@ -55,8 +56,23 @@ void init_board(int n_of_mines)
             board[nx][ny]++;
         }
     }
+}
 
-    // TODO implement set n_of_nearby_mines in each block
+void print_board()
+{
+    for (int i = 0; i < r_size; i++)
+    {
+        for (int j = 0; j < c_size; j++)
+        {
+            if (is_opened[i][j])
+            {
+                cout << board[i][j] << ' ';
+                continue;
+            }
+            cout << "." << ' ';
+        }
+        cout << endl;
+    }
 }
 
 int main()
@@ -69,7 +85,8 @@ int main()
     cout << "Please enter number of columns: ";
     cin >> c_size;
 
-    board = vector<vector<int>>(r_size, vector<int>(c_size));
+    board = vector<vector<int>>(r_size, vector<int>(c_size, 0));
+    is_opened = vector<vector<bool>>(r_size, vector<bool>(c_size, false));
 
     cout << "Please enter number of mines: ";
     cin >> n_of_mines;
@@ -91,4 +108,5 @@ int main()
     //     }
     //     cout << endl;
     // }
+    print_board();
 }
