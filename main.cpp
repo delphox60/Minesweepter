@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <cstring>
 
 using namespace std;
 
 vector<vector<int>> board;
 vector<vector<bool>> is_opened;
+vector<vector<bool>> is_marked;
 int r_size;
 int c_size;
 
@@ -69,6 +71,11 @@ void print_board()
                 cout << board[i][j] << ' ';
                 continue;
             }
+            else if (is_marked[i][j])
+            {
+                cout << "V" << ' ';
+                continue;
+            }
             cout << "." << ' ';
         }
         cout << endl;
@@ -106,6 +113,7 @@ int main()
 
     board = vector<vector<int>>(r_size, vector<int>(c_size, 0));
     is_opened = vector<vector<bool>>(r_size, vector<bool>(c_size, false));
+    is_marked = vector<vector<bool>>(r_size, vector<bool>(c_size, false));
 
     cout << "Please enter number of mines: ";
     cin >> n_of_mines;
@@ -119,17 +127,34 @@ int main()
         print_board();
         cout << "# of mines remaining: " << (n_of_mines - n_of_check) << endl;
 
+        string command;
+
+        cout << "Enter command (o: open / m: mark): ";
+        cin >> command;
+
         int input_x;
         int input_y;
 
         cin >> input_x >> input_y;
 
-        if (board[input_x][input_y] < 0)
+        if (command == "o")
         {
-            fail();
-            break;
+            if (board[input_x][input_y] < 0)
+            {
+                fail();
+                break;
+            }
+
+            is_opened[input_x][input_y] = true;
+            continue;
         }
 
-        is_opened[input_x][input_y] = true;
+        if (command == "m")
+        {
+            is_marked[input_x][input_y] = true;
+            continue;
+        }
+
+        cout << "Invalid command. Try again." << endl;
     }
 }
