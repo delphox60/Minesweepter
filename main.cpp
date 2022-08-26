@@ -77,9 +77,6 @@ void print_board()
 
 void fail()
 {
-    cout << "That block is mine." << endl;
-    cout << "Game over" << endl;
-
     for (int i = 0; i < r_size; i++)
     {
         for (int j = 0; j < c_size; j++)
@@ -93,6 +90,8 @@ void fail()
         }
         cout << endl;
     }
+    cout << "That block is mine." << endl;
+    cout << "Game over" << endl;
 }
 
 int main()
@@ -113,9 +112,12 @@ int main()
 
     init_board(n_of_mines);
 
+    int n_of_check = 0;
+
     while (true)
     {
         print_board();
+        cout << "# of mines remaining: " << (n_of_mines - n_of_check) << endl;
 
         int input_x;
         int input_y;
