@@ -75,6 +75,26 @@ void print_board()
     }
 }
 
+void fail()
+{
+    cout << "That block is mine." << endl;
+    cout << "Game over" << endl;
+
+    for (int i = 0; i < r_size; i++)
+    {
+        for (int j = 0; j < c_size; j++)
+        {
+            if (board[i][j] < 0)
+            {
+                cout << "X" << ' ';
+                continue;
+            }
+            cout << board[i][j] << ' ';
+        }
+        cout << endl;
+    }
+}
+
 int main()
 {
     int n_of_mines;
@@ -93,20 +113,21 @@ int main()
 
     init_board(n_of_mines);
 
-    // test code
+    while (true)
+    {
+        print_board();
 
-    // for (int i = 0; i < r_size; i++)
-    // {
-    //     for (int j = 0; j < c_size; j++)
-    //     {
-    //         if (board[i][j] < 0)
-    //         {
-    //             cout << "X" << ' ';
-    //             continue;
-    //         }
-    //         cout << board[i][j] << ' ';
-    //     }
-    //     cout << endl;
-    // }
-    print_board();
+        int input_x;
+        int input_y;
+
+        cin >> input_x >> input_y;
+
+        if (board[input_x][input_y] < 0)
+        {
+            fail();
+            break;
+        }
+
+        is_opened[input_x][input_y] = true;
+    }
 }
